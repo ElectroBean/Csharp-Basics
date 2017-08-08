@@ -9,36 +9,12 @@ namespace csharp
 {
     class Program
     {
-        static void ArrayExample(int size)
-        {
-            int[] array = new int[size];
-            foreach (int index in array)
-            {
-                //index = 1;  cant change variable in foreach loop
-                Console.WriteLine(array[index]);
-            }
-        }
-
-        static int[] array = new int[69];
-        static void ArrayExample2(int[] array)
-        {
-            Array ar = array;
-            int length = ar.Length;
-            Console.WriteLine(length);
-        }
-
-        enum choices
-        {
-            Add = '+',
-            Subtract = '-',
-            Multiply = '*',
-            Divide = '/',
-        }
-
-
+        static int[] array = new int[5];
+        
         static void Main(string[] args)
         {
-            //firstClass myClass = new firstClass();
+            firstClass myClass = new firstClass();
+            customClass customClass = new customClass();
             //Console.Write("What you wanna do?");
             //string choice = Console.ReadLine();
             //float a = 0;
@@ -90,8 +66,18 @@ namespace csharp
             //}
 
             //ArrayExample(10);
-            ArrayExample2(array);
-            Console.WriteLine(array[100]);
+            //Console.WriteLine("Array Copy");
+            //ArrayExample2(array);
+            //array[4] = 10;
+            //Console.WriteLine("");
+            //Console.WriteLine("Original Array");
+            //foreach (int i in array)
+            //{
+            //    Console.WriteLine(i);
+            //}
+            myClass.ListExample();
+            
+
             while (true) ;
         }
 
