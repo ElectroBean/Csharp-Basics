@@ -12,10 +12,8 @@ namespace Winforms
 {
     public partial class Form1 : Form
     {
+        Brush currentBrush = new Brush(); 
 
-        bool paint = false;
-        SolidBrush color;
-        bool marker = false;
         public Form1()
         {
             InitializeComponent();
@@ -63,30 +61,24 @@ namespace Winforms
 
         private void btnClick(object sender, EventArgs e)
         {
-            Graphics gl = panel1.CreateGraphics();
-            gl.Clear(panel1.BackColor);
+            //Graphics gl = panel1.CreateGraphics();
+            //gl.Clear(panel1.BackColor);
             //https://www.youtube.com/watch?v=HxCq77mrQyo
         }
 
         private void panel1_MouseDown(object sender, MouseEventArgs e)
         {
-            paint = true;
+            currentBrush.painting = true;
         }
 
         private void panel1_MouseUp(object sender, MouseEventArgs e)
         {
-            paint = false;
+            currentBrush.painting = false;
         }
 
         private void panel1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (paint && marker)
-            {
-                color = new SolidBrush(Color.PeachPuff);
-                Graphics g = panel1.CreateGraphics();
-                g.FillEllipse(color, e.X - 5, e.Y - 5, 10, 10);
-                // g.Dispose();
-            }
+            currentBrush.paint(panel1, (float)numericUpDown4.Value, e);
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -96,13 +88,69 @@ namespace Winforms
 
         private void checkedListBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            if (checkedListBox1.GetItemChecked(0))
+
+        }
+
+        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+           if (radioButton1.Checked)
             {
-                marker = true;
+                currentBrush.marker = true;
+                currentBrush.color = new SolidBrush(colorDialog1.Color);
+
             }
-            if(!checkedListBox1.GetItemChecked(0))
+           else
             {
-                marker = false;
+                currentBrush.marker = false;
+
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                currentBrush.eraser = true;
+
+            }
+            else
+            {
+                currentBrush.eraser = false;
+
+            }
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Graphics gl = panel1.CreateGraphics();
+            gl.Clear(panel1.BackColor);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //currentBrush.updateColor(comboBox1.Text);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                currentBrush.updateColor(colorDialog1.Color);
             }
         }
     }
