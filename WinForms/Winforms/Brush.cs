@@ -10,35 +10,54 @@ namespace Winforms
 {
     class Brush
     {
+        public Brush(PictureBox drawArea)
+        {
+           xSize = drawArea.Width;
+           ySize = drawArea.Height;
+        }
+        public Brush()
+        {
+
+        }
         public SolidBrush color = new SolidBrush(Color.PeachPuff);
-        float size = 10.0f;
+        float size = 10;
         public bool marker = false;
         public bool eraser = false;
         bool selector = false;
         bool bucket = false;
         public bool painting = false;
+        private const int xSize;
+        private const int ySize;
+        Bitmap bmp = new Bitmap(Image.FromFile("./BG.png"), xSize, ySize);
 
-        public void paint(Panel drawArea, float upDownSize, MouseEventArgs e)
+        public void paint(PictureBox drawArea, float upDownSize, MouseEventArgs e)
         {
             if (painting && marker)
             {
-                Graphics g = drawArea.CreateGraphics();
-                g.FillEllipse(color, e.X - (size / 2), e.Y - (size / 2), upDownSize, upDownSize);
+                //Bitmap bmp = new Bitmap(drawArea.Width, drawArea.Height);
+                //drawArea.DrawToBitmap(bmp, new Rectangle(0, 0, drawArea.Width, drawArea.Height));
+                Graphics g = Graphics.FromImage(bmp);
+                g.FillEllipse(color, e.X - (upDownSize / 2), e.Y - (upDownSize / 2), upDownSize, upDownSize);
+                drawArea.Image = bmp;
 
             }
 
             if (painting && eraser)
             {
-                Graphics g = drawArea.CreateGraphics();
+                //Bitmap bmp = new Bitmap(drawArea.Width, drawArea.Height);
+                //drawArea.DrawToBitmap(bmp, new Rectangle(0, 0, drawArea.Width, drawArea.Height));
+                Graphics g = Graphics.FromImage(bmp);
                 color = new SolidBrush(Color.White);
-                g.FillEllipse(color, e.X - (size / 2), e.Y - (size / 2), upDownSize, upDownSize);
-
+                g.FillEllipse(color, e.X - (upDownSize / 2), e.Y - (upDownSize / 2), upDownSize, upDownSize);
+                drawArea.Image = bmp;
             }
 
             if(painting && bucket)
             {
-                Graphics g = drawArea.CreateGraphics();
-
+                Bitmap bmp = new Bitmap(drawArea.Width, drawArea.Height);
+                drawArea.DrawToBitmap(bmp, new Rectangle(0, 0, drawArea.Width, drawArea.Height));
+                Graphics g = Graphics.FromImage(bmp);
+                drawArea.Image = bmp;
             }
         }
 
