@@ -16,12 +16,14 @@ namespace Winforms
     public partial class Form1 : Form
     {
         Brush currentBrush;
-
+        Bitmap bmp;
         public Form1()
         {
             InitializeComponent();
             currentBrush = new Brush(pictureBox1);
-            //pictureBox1.Image = Image.FromFile("./BG.png");
+            pictureBox1.Image = Image.FromFile("./BG.png");
+            bmp = new Bitmap(Image.FromFile("./BG.png"), pictureBox1.Width, pictureBox1.Height);
+            //System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Cross;
         }
 
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -36,7 +38,7 @@ namespace Winforms
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-           
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,23 +53,14 @@ namespace Winforms
 
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Bitmap bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            //Rectangle rect = new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height);
-            //pictureBox1.DrawToBitmap(bmp, rect);
-            //MemoryStream ms = new MemoryStream();
             FileStream fs = new FileStream("bexample.bin", FileMode.Create);
             pictureBox1.Image.Save(fs, ImageFormat.Png);
             fs.Close();
-            //byte[] array = null;
-            //XmlSerializer xml = new XmlSerializer(typeof(Bitmap));
-            //StreamWriter sw = new StreamWriter("example.xml");
-            //xml.Serialize(sw, bmp);
-            //sw.Close();
         }
-        
+
         private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            
+
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -108,13 +101,13 @@ namespace Winforms
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-           if (radioButton1.Checked)
+            if (radioButton1.Checked)
             {
                 currentBrush.marker = true;
                 currentBrush.color = new SolidBrush(colorDialog1.Color);
 
             }
-           else
+            else
             {
                 currentBrush.marker = false;
 
@@ -147,9 +140,8 @@ namespace Winforms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Graphics gl = pictureBox1.CreateGraphics();
-            gl.Clear(pictureBox1.BackColor);
-            //pictureBox1.Image = new Bitmap();
+            pictureBox1.Image = Image.FromFile("./BG.png");
+            bmp = new Bitmap(Image.FromFile("./BG.png"), pictureBox1.Width, pictureBox1.Height);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -158,7 +150,7 @@ namespace Winforms
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(colorDialog1.ShowDialog() == DialogResult.OK)
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
                 currentBrush.updateColor(colorDialog1.Color);
             }
@@ -181,7 +173,7 @@ namespace Winforms
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
-            currentBrush.paint(pictureBox1, (float)numericUpDown4.Value, e);
+            currentBrush.paint(bmp, pictureBox1, (float)numericUpDown4.Value, e);
         }
 
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -200,9 +192,52 @@ namespace Winforms
             //byte[] bytes = new byte[fStream.Length];
             //fStream.Read(bytes, 0, (int)fStream.Length);
 
-            FileStream fStream = new FileStream("bexample.bin", FileMode.Open, FileAccess.Read);
-            pictureBox1.Image = new Bitmap(fStream);
-            fStream.Close();
+            if (File.Exists("bexample.bin"))
+            {
+                FileStream fStream = new FileStream("bexample.bin", FileMode.Open, FileAccess.Read);
+                pictureBox1.Image = new Bitmap(fStream);
+                fStream.Close();
+                pictureBox1.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height));
+
+            }
+            else
+            {
+                MessageBox.Show("File not found");
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                string file = openFileDialog1.FileName;
+
+                bmp = new Bitmap(Image.FromFile(file));//, pictureBox1.Width, pictureBox1.Height);
+                pictureBox1.Image = bmp;
+                pictureBox1.DrawToBitmap(bmp, new Rectangle(0, 0, pictureBox1.Width, pictureBox1.Height));
+            }
+        }
+
+        private void pictureBox1_DragDrop(object sender, DragEventArgs e)
+        {
+            
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.Filter = "PNG (*.png) | *.png |JPEG (*.jpg) | *.jpg | All files (*.*) | *.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            DialogResult result = saveFileDialog1.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK) // Test result.
+            {
+                string file = saveFileDialog1.FileName;
+
+                FileStream fs = new FileStream(file, FileMode.Create);
+                pictureBox1.Image.Save(fs, ImageFormat.Png);
+                fs.Close();
+            }
         }
     }
 }
