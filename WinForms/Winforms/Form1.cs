@@ -17,12 +17,21 @@ namespace Winforms
     {
         Brush currentBrush;
         Bitmap bmp;
+
+        List<StampBrush> stamps = new List<StampBrush>();
+        
         public Form1()
         {
             InitializeComponent();
-            currentBrush = new Brush(pictureBox1);
+            currentBrush = new Brush();
             pictureBox1.Image = Image.FromFile("./BG.png");
             bmp = new Bitmap(Image.FromFile("./BG.png"), pictureBox1.Width, pictureBox1.Height);
+            for (int i = 0; i < imageList1.Images.Count; i++)
+            {
+                stamps.Add(new StampBrush(imageList1.Images[i]));
+            }
+
+         
             //System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Cross;
         }
 
@@ -38,7 +47,8 @@ namespace Winforms
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            pictureBox1.Image = Image.FromFile("./BG.png");
+            bmp = new Bitmap(Image.FromFile("./BG.png"), pictureBox1.Width, pictureBox1.Height);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -103,6 +113,23 @@ namespace Winforms
         {
             if (radioButton1.Checked)
             {
+                currentBrush = new Brush();
+                currentBrush.marker = true;
+                currentBrush.color = new SolidBrush(colorDialog1.Color);
+
+            }
+            else
+            {
+                currentBrush.marker = false;
+
+            }
+        }
+
+        private void radioButton1_Click(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked)
+            {
+                currentBrush = new Brush();
                 currentBrush.marker = true;
                 currentBrush.color = new SolidBrush(colorDialog1.Color);
 
@@ -118,6 +145,21 @@ namespace Winforms
         {
             if (radioButton2.Checked)
             {
+                currentBrush.eraser = true;
+
+            }
+            else
+            {
+                currentBrush.eraser = false;
+
+            }
+        }
+
+        private void radioButton2_Click(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked)
+            {
+                currentBrush = new Brush();
                 currentBrush.eraser = true;
 
             }
@@ -158,12 +200,12 @@ namespace Winforms
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-
+            
         }
 
         private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-
+            currentBrush.paint(bmp, pictureBox1, (float)numericUpDown4.Value, e);
         }
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
@@ -237,6 +279,26 @@ namespace Winforms
                 FileStream fs = new FileStream(file, FileMode.Create);
                 pictureBox1.Image.Save(fs, ImageFormat.Png);
                 fs.Close();
+            }
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem itm in listView1.SelectedItems)
+            {
+                int img = itm.ImageIndex;
+                Image ig = imageList1.Images[img];
+                currentBrush = new StampBrush(ig);
+            }
+        }
+
+        private void listView1_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem itm in listView1.SelectedItems)
+            {
+                int img = itm.ImageIndex;
+                Image ig = imageList1.Images[img];
+                currentBrush = stamps[img];
             }
         }
     }

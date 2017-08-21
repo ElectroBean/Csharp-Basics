@@ -22,11 +22,10 @@ namespace Winforms
         float size = 10;
         public bool marker = false;
         public bool eraser = false;
-        bool selector = false;
         bool bucket = false;
         public bool painting = false;
 
-        public void paint(Bitmap bmp, PictureBox drawArea, float upDownSize, MouseEventArgs e)
+        virtual public void paint(Bitmap bmp, PictureBox drawArea, float upDownSize, MouseEventArgs e)
         {
             if (painting && marker)
             {
@@ -34,7 +33,8 @@ namespace Winforms
                 Graphics g = Graphics.FromImage(bmp);
                 g.FillEllipse(color, e.X - (upDownSize / 2), e.Y - (upDownSize / 2), upDownSize, upDownSize);
                 drawArea.Image = bmp;
-
+                
+                
             }
 
             if (painting && eraser)
