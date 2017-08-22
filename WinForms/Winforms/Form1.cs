@@ -271,6 +271,7 @@ namespace Winforms
             saveFileDialog1.Filter = "PNG (*.png) | *.png |JPEG (*.jpg) | *.jpg | All files (*.*) | *.*";
             saveFileDialog1.FilterIndex = 2;
             saveFileDialog1.RestoreDirectory = true;
+
             DialogResult result = saveFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
             {

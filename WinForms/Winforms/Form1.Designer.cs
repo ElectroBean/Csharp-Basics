@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("", 0);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("", 1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("", 2);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("", 3);
-            System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("", 4);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("", 0);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("", 1);
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("", 2);
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("", 3);
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("", 4);
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -277,11 +277,11 @@
             // listView1
             // 
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem6,
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4,
+            listViewItem5});
             this.listView1.LargeImageList = this.imageList1;
             this.listView1.Location = new System.Drawing.Point(7, 179);
             this.listView1.Name = "listView1";
@@ -296,11 +296,11 @@
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "Chrysanthemum.jpg");
-            this.imageList1.Images.SetKeyName(1, "Desert.jpg");
-            this.imageList1.Images.SetKeyName(2, "Hydrangeas.jpg");
-            this.imageList1.Images.SetKeyName(3, "Jellyfish.jpg");
-            this.imageList1.Images.SetKeyName(4, "Untitled-1.png");
+            this.imageList1.Images.SetKeyName(0, "dog.png");
+            this.imageList1.Images.SetKeyName(1, "Pentagon.png");
+            this.imageList1.Images.SetKeyName(2, "Rectangle.png");
+            this.imageList1.Images.SetKeyName(3, "Square.png");
+            this.imageList1.Images.SetKeyName(4, "Triangle.png");
             // 
             // Form1
             // 

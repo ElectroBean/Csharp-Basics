@@ -23,7 +23,7 @@ namespace Winforms
             if (painting)
             {
                 Graphics g = Graphics.FromImage(bmp);
-                g.DrawImage(stamp, e.X - (upDownSize / 2), e.Y - (upDownSize / 2));
+                g.DrawImage(stamp, e.X - (upDownSize / 2), e.Y - (upDownSize / 2), 50, 50);
                 drawArea.Image = bmp;
 
             }
