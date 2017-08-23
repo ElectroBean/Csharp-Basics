@@ -18,12 +18,13 @@ namespace Winforms
         {
 
         }
-        public SolidBrush color = new SolidBrush(Color.PeachPuff);
+        public SolidBrush color = new SolidBrush(Color.Black);
         float size = 10;
         public bool marker = false;
         public bool eraser = false;
-        bool bucket = false;
+        public bool bucket = false;
         public bool painting = false;
+        public bool colorPick = false;
 
         virtual public void paint(Bitmap bmp, PictureBox drawArea, float upDownSize, MouseEventArgs e)
         {
@@ -49,10 +50,17 @@ namespace Winforms
 
             if(painting && bucket)
             {
-                drawArea.DrawToBitmap(bmp, new Rectangle(0, 0, drawArea.Width, drawArea.Height));
                 Graphics g = Graphics.FromImage(bmp);
+                
+
                 drawArea.Image = bmp;
 
+            }
+
+            if(painting && colorPick)
+            {
+                Color  newColor = bmp.GetPixel(e.X, e.Y);
+                color = new SolidBrush(newColor);
             }
         }
 
@@ -68,6 +76,6 @@ namespace Winforms
                 color = new SolidBrush(asd);
             }
         }
-
+        
     }
 }

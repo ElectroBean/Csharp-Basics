@@ -17,7 +17,7 @@ namespace Winforms
     {
         Brush currentBrush;
         Bitmap bmp;
-
+        //list of stamps because i needed a list for the assessment
         List<StampBrush> stamps = new List<StampBrush>();
         
         public Form1()
@@ -34,104 +34,48 @@ namespace Winforms
          
             //System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Cross;
         }
-
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //default background
             pictureBox1.Image = Image.FromFile("./BG.png");
             bmp = new Bitmap(Image.FromFile("./BG.png"), pictureBox1.Width, pictureBox1.Height);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //saving
             FileStream fs = new FileStream("bexample.bin", FileMode.Create);
             pictureBox1.Image.Save(fs, ImageFormat.Png);
             fs.Close();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnClick(object sender, EventArgs e)
-        {
-        }
-
-        private void panel1_MouseDown(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void panel1_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void panel1_MouseMove(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void panel1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void checkedListBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton1.Checked)
-            {
-                currentBrush = new Brush();
-                currentBrush.marker = true;
-                currentBrush.color = new SolidBrush(colorDialog1.Color);
-
-            }
-            else
-            {
-                currentBrush.marker = false;
-
-            }
+           // //setting brush to a new brush
+           // if (radioButton1.Checked)
+           // {
+           //     currentBrush = new Brush();
+           //     currentBrush.marker = true;
+           //     currentBrush.color = new SolidBrush(colorDialog1.Color);
+           //
+           // }
+           // else
+           // {
+           //     currentBrush.marker = false;
+           //
+           // }
         }
 
         private void radioButton1_Click(object sender, EventArgs e)
         {
+            //changes back to marker
             if (radioButton1.Checked)
             {
+                SolidBrush newCol = currentBrush.color;
                 currentBrush = new Brush();
                 currentBrush.marker = true;
-                currentBrush.color = new SolidBrush(colorDialog1.Color);
+                currentBrush.color = newCol;
 
             }
             else
@@ -143,16 +87,6 @@ namespace Winforms
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
-            if (radioButton2.Checked)
-            {
-                currentBrush.eraser = true;
-
-            }
-            else
-            {
-                currentBrush.eraser = false;
-
-            }
         }
 
         private void radioButton2_Click(object sender, EventArgs e)
@@ -180,8 +114,24 @@ namespace Winforms
 
         }
 
+        private void radioButton4_Click(object sender, EventArgs e)
+        {
+            if (radioButton4.Checked)
+            {
+                currentBrush = new Brush();
+                currentBrush.colorPick = true;
+
+            }
+            else
+            {
+                currentBrush.colorPick = false;
+
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
+            //clear the screen by resetting the bitmap to the original bitmap
             pictureBox1.Image = Image.FromFile("./BG.png");
             bmp = new Bitmap(Image.FromFile("./BG.png"), pictureBox1.Width, pictureBox1.Height);
         }
@@ -194,6 +144,7 @@ namespace Winforms
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
+                //updates color
                 currentBrush.updateColor(colorDialog1.Color);
             }
         }
@@ -236,6 +187,7 @@ namespace Winforms
 
             if (File.Exists("bexample.bin"))
             {
+                //loads image and draws it to bitmap so you can draw on it
                 FileStream fStream = new FileStream("bexample.bin", FileMode.Open, FileAccess.Read);
                 pictureBox1.Image = new Bitmap(fStream);
                 fStream.Close();
